@@ -1,2 +1,2 @@
 # tab-tracker
-Tutorial based git
+Express.js / Vue.js tutorial
