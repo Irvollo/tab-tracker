@@ -72,6 +72,11 @@
             error>
               {{error}}
           </v-alert>
+
+           <v-btn
+            @click="save">
+            Save
+          </v-btn>
       </v-flex>
     </v-layout>
   </div>
@@ -100,18 +105,31 @@ export default {
   components: {
     Panel
   },
+  async mounted () {
+    try {
+      // This is how you get the parameter from a Route
+      const songId = this.$store.state.route.params.songId
+      this.song = (await SongService.show(songId)).data
+    } catch (error) {
+      console.log(error)
+    }
+  },
   methods: {
-    async create () {
+    async save () {
       this.error = null
       const areAllFieldsFilledIn = Object.keys(this.song).every(key => !!this.song[key])
       if (!areAllFieldsFilledIn) {
         this.error = 'Please fill in all the required fields'
         return
       }
+      const songId = this.$store.state.route.params.songId
       try {
-        await SongService.post(this.song)
+        await SongService.put(this.song)
         this.$router.push({
-          name: 'songs'
+          name: 'song',
+          params: {
+            songId: songId
+          }
         })
       } catch (error) {
         this.error = error.response.data.error
