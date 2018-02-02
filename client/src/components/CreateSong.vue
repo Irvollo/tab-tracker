@@ -42,7 +42,7 @@
             label="Youtube ID"
             required
             :rules="[required]"
-            v-model="song.youtubeID">
+            v-model="song.youtubeId">
           </v-text-field>
         </panel>
       </v-flex>
@@ -94,7 +94,7 @@ export default {
         genre: null,
         album: null,
         albumImageUrl: null,
-        youtubeID: null,
+        youtubeId: null,
         lyrics: null,
         tab: null
       },

@@ -92,7 +92,6 @@ export default {
   font-size: 18px;
 }
 
-
 .album-image {
   width:  70%;
   margin: 0 auto;
