@@ -63,6 +63,9 @@ export default {
         this.songs = (await SongService.index(value)).data
       }
     }
+  },
+  async mounted () {
+    this.songs = (await SongService.index()).data
   }
 }
 </script>

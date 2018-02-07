@@ -72,6 +72,12 @@
             error>
               {{error}}
           </v-alert>
+          <v-btn
+            dark
+            class="orange"
+            @click="create"
+            >Create Song
+          </v-btn>
       </v-flex>
     </v-layout>
   </div>
