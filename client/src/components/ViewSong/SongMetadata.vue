@@ -16,8 +16,10 @@
         class="orange"
         :to="{
           name: 'song-edit',
-          params: {
-            songId: song.id
+          params () {
+            return {
+              songId: song.id
+            }
           }
         }"
         dark>
