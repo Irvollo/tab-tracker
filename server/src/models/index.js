@@ -8,9 +8,6 @@ const sequelize = new Sequelize(
 	config.db.database,
 	config.db.user,
 	config.db.password,
-	{
-		dialect: "sqlite"
-	},
 	config.db.options
 );
 
@@ -24,6 +21,13 @@ fs
 		const model = sequelize.import(path.join(__dirname, file));
 		db[model.name] = model;
 	});
+
+// Read all the asocciations
+Object.keys(db).forEach(function (modelName) {
+	if ("associate" in db[modelName]){
+		db[modelName].associate(db);
+	}
+});
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

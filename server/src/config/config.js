@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
 	port: 8081,
 	db: {
@@ -5,9 +7,9 @@ module.exports = {
 		user: process.env.DB_USER || "tabtracker",
 		password: process.env.DB_PASS || "tabtracker",
 		options: {
-			dialtec: process.env.DIALECT || "sqlite",
+			dialect: process.env.DIALECT || "sqlite",
 			host: process.env.HOST || "localhost",
-			storage: "./tabtracker.sqlite"
+			storage: path.resolve(__dirname, "../../tabtracker.sqlite")
 		}
 	},
 	authentication: {
