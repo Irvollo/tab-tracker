@@ -34,7 +34,10 @@ module.exports = {
 				});
 			}
 
-			const newBookmark = await Bookmark.create(req.body);
+			const newBookmark = await Bookmark.create({
+				SongId: SongId,
+				UserId: UserId
+			});
 			res.send(newBookmark);
 		} catch (err) {
 			res.status(500).send({
@@ -47,6 +50,7 @@ module.exports = {
 			const {bookmarkId} = req.params;
 			const bookmark = await Bookmark.findById(bookmarkId);
 			await bookmark.destroy();
+			res.send(bookmark);
 		} catch (err) {
 			res.status(500).send({
 				error: "Impossible to destroy the Bookmark"

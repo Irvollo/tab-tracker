@@ -26,18 +26,18 @@
         Edit
       </v-btn>
       <v-btn
-        v-if="isUserLoggedIn && !isBookmarked"
+        v-if="isUserLoggedIn && !bookmark"
         class="orange"
-        @click="bookmark"
+        @click="setAsBookmark"
         dark>
-        Bookmark
+        Set as Bookmark
       </v-btn>
       <v-btn
-        v-if="isUserLoggedIn && isBookmarked"
+        v-if="isUserLoggedIn && bookmark"
         class="orange"
-        @click="unbookmark"
+        @click="unsetAsBookmark"
         dark>
-        Unbookmark
+        Unset as Bookmark
       </v-btn>
       </v-flex>
       <v-flex xs6>
@@ -59,7 +59,7 @@ export default {
   ],
   data () {
     return {
-      isBookmarked: false
+      bookmark: null
     }
   },
   computed: {
@@ -72,32 +72,30 @@ export default {
       if (!this.isUserLoggedIn) {
         return
       }
-      const bookmark = (await BookmarksService.index({
+      this.bookmark = (await BookmarksService.index({
         songId: this.$store.state.route.params.songId,
         userId: this.$store.state.user.id
       })).data
-      this.isBookmarked = !!bookmark
     } catch (err) {
       console.log(err)
     }
   },
   methods: {
-    async bookmark () {
+    async setAsBookmark () {
       try {
-        await BookmarksService.post({
+        this.bookmark = (await BookmarksService.post({
           SongId: parseInt(this.$store.state.route.params.songId),
           UserId: this.$store.state.user.id
-        })
+        })).data
       } catch (err) {
         console.log(err)
       }
     },
-    async unbookmark () {
+    async unsetAsBookmark () {
       try {
-        await BookmarksService.delete({
-          songId: this.$store.state.route.params.songId,
-          userId: this.$store.state.user.id
-        })
+        await BookmarksService.delete(this.bookmark.id)
+        this.bookmark = null
+        console.log('works')
       } catch (err) {
         console.log(err)
       }
