@@ -19,13 +19,14 @@ module.exports = {
 	},
 	async post (req, res) {
 		try {
-			const {songId, userId} = req.body;
+			const {SongId, UserId} = req.body;
+
 			const bookmark = await Bookmark.findOne({
 				where: {
-					SongId: songId,
-					UserId: userId
+					SongId: SongId,
+					UserId: UserId
 				}
-			}); 
+			});
 
 			if (bookmark) {
 				return res.status(400).send({
